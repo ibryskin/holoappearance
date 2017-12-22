@@ -1,0 +1,110 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="holo-category-data.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="holo-list">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <app-route
+      route="[[route]]"
+      pattern="/:category"
+      data="{{routeData}}">
+    </app-route>
+
+    <holo-category-data
+      id="categoryData"
+      category-name="[[routeData.category]]"
+      category="{{category}}"
+      failure="{{failure}}">
+    </holo-category-data>
+
+    <header>
+      <h1>[[category.title]]</h1>
+    </header>
+
+  </template>
+
+  <script>
+    class HoloList extends Polymer.Element {
+      static get is() { return 'holo-list'; }
+
+      static get properties() {
+        return {
+          category: Object,
+
+          route: Object,
+
+          routeData: Object,
+
+          visible: {
+            type: Boolean,
+            value: false
+          },
+
+          offline: {
+            type: Boolean,
+            observer: '_offlineChanged'
+          },
+
+          failure: Boolean
+        }
+      }
+
+      static get observers() {
+        return [
+          '_categoryChanged(category, visible)'
+        ];
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this.isAttached = true;
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        this.isAttached = false;
+      }
+
+      _categoryChanged(category, visible) {
+        if (!visible) {
+          return;
+        }
+        this._changeSectionDebouncer = Polymer.Debouncer.debounce(this._changeSectionDebouncer,
+          Polymer.Async.microTask, () => {
+            if (category) {
+              this.dispatchEvent(new CustomEvent('change-section', {
+              bubbles: true, composed: true, detail: {
+                selectedPage: category.name,
+                title: category.title
+              }}));
+            } else {
+              this.dispatchEvent(new CustomEvent('show-invalid-url-warning', {
+                bubbles: true, composed: true }));
+            }
+          }
+        )
+      }
+
+      _tryReconnect() {
+        this.$.categoryData.refresh();
+      }
+
+      _offlineChanged(offline) {
+        if (!offline && this.isAttached) {
+          this._tryReconnect();
+        }
+      }
+    }
+
+    window.customElements.define(HoloList.is, HoloList);
+  </script>
+</dom-module>

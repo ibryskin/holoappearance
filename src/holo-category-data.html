@@ -1,0 +1,139 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="holo-category-data">
+  <script>
+    (function () {
+      let categoryList = [
+        {
+          name: "animals",
+          title: "Holograms of animals"
+        },
+        {
+          name: "museum_pieces",
+          title: "Holograms of museum pieces"
+        },
+        {
+          name: "art",
+          title: "Art holograms"
+        },
+        {
+          name: "advertising",
+          title: "Advertising holograms"
+        },
+        {
+          name: "portraits",
+          title: "Portrait holograms"
+        }
+      ];
+
+      class HoloCategoryData extends Polymer.Element {
+
+        static get is() { return 'holo-category-data'; }
+
+        static get properties() { return {
+
+          categoryName: String,
+
+          itemName: String,
+
+          categories: {
+            type: Array,
+            value: categoryList,
+            readOnly: true,
+            notify: true
+          },
+
+          category: {
+            type: Object,
+            computed: '_computeCategory(categoryName)',
+            notify: true
+          },
+
+          item: {
+            type: Object,
+            computed: '_computeItem(category.items, itemName)',
+            notify: true
+          },
+
+          failure: {
+            type: Boolean,
+            notify: true,
+            readOnly: true
+          }
+
+        }}
+
+        _getCategoryObject(categoryName) {
+          for (let i = 0, c; c = this.categories[i]; ++i) {
+            if (c.name === categoryName) {
+              return c;
+            }
+          }
+        }
+
+        _computeCategory(categoryName) {
+          let categoryObj = this._getCategoryObject(categoryName);
+          this._fetchItems(categoryObj, 1);
+          return categoryObj;
+        }
+
+        _computeItem(items, itemName) {
+          if (!items || !itemName) {
+            return;
+          }
+          for (let i = 0, item; item = items[i]; ++i) {
+            if (item.name === itemName) {
+              return item;
+            }
+          }
+        }
+
+        _fetchItems(category, attempts) {
+          this._setFailure(false);
+          if (!category || category.items) {
+            return;
+          }
+          this._getResource({
+            url: 'data/' + category.name + '.json',
+            onLoad(e) {
+              if (e.target.status === 200) {
+                this.set('category.items', JSON.parse(e.target.responseText));
+              } else {
+                this._setFailure(true);
+              }
+            },
+            onError(e) {
+              this._setFailure(true);
+            }
+          }, attempts);
+        }
+
+        _getResource(rq, attempts) {
+          let xhr = new XMLHttpRequest();
+          xhr.addEventListener('load', rq.onLoad.bind(this));
+          xhr.addEventListener('error', (e) => {
+            if (attempts > 1) {
+              this._getResourceDebouncer = Polymer.Debouncer.debounce(this._getResourceDebouncer,
+                Polymer.Async.timeOut.after(200), this._getResource.bind(this, rq, attempts - 1));
+            } else {
+              rq.onError.call(this, e);
+            }
+          });
+
+          xhr.open('GET', rq.url);
+          xhr.send();
+        }
+
+        refresh() {
+          if (this.categoryName) {
+            this._fetchItems(this._getCategoryObject(this.categoryName), 3);
+          }
+        }
+
+      }
+
+      customElements.define(HoloCategoryData.is, HoloCategoryData);
+
+    })();
+  </script>
+</dom-module>
