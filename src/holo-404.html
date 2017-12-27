@@ -2,7 +2,7 @@
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="holo-icons.html">
 
-<dom-module id="holo-404-warning">
+<dom-module id="holo-404">
   <template>
     <style>
       :host {
@@ -30,8 +30,8 @@
   </template>
 
   <script>
-    class Holo404Warning extends Polymer.Element {
-      static get is() { return 'holo-404-warning'; }
+    class Holo404 extends Polymer.Element {
+      static get is() { return 'holo-404'; }
       static get properties() {
         return {
           rootPath: String,
@@ -39,6 +39,6 @@
       }
     }
 
-    window.customElements.define(Holo404Warning.is, Holo404Warning);
+    window.customElements.define(Holo404.is, Holo404);
   </script>
 </dom-module>

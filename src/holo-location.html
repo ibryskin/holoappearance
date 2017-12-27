@@ -1,0 +1,169 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-location/iron-location.html">
+<link rel="import" href="../bower_components/iron-location/iron-query-params.html">
+
+<dom-module id="holo-location">
+  <template>
+    <iron-query-params
+        params-string="{{__query}}"
+        params-object="{{queryParams}}">
+    </iron-query-params>
+    <iron-location
+        path="{{__path}}"
+        query="{{__query}}"
+        hash="{{__hash}}"
+        url-space-regex={{urlSpaceRegex}}>
+    </iron-location>
+  </template>
+  <script>
+    class HoloLocation extends Polymer.Element {
+
+      static get is() { return 'holo-location'; }
+
+      static get properties() {
+        return {
+          route: {
+            type: Object,
+            notify: true
+          },
+
+          useHashAsPath: {
+            type: Boolean,
+            value: false
+          },
+
+          urlSpaceRegex: {
+            type: String,
+            notify: true
+          },
+
+          languageRegex: {
+            type: String,
+            notify: true,
+            value: '(en|ru)'
+          },
+
+          defaultLanguage: {
+            type: String,
+            notify: true
+          },
+
+          queryParams: {
+            type: Object,
+            notify: true
+          },
+
+          __path: {
+            type: String
+          },
+
+          __query: {
+            type: String
+          },
+
+          __hash: {
+            type: String
+          },
+
+          path: {
+            type: String,
+            notify: true,
+            observer: '__onPathChanged'
+          },
+
+          _isReady: {
+            type: Boolean
+          },
+
+          route: {
+            type: Object,
+            notify: true
+          }
+        }
+      }
+
+      static get observers() {
+        return [
+          '__computeRoutePath(useHashAsPath, __hash, __path)',
+          '_locationChanged(path, queryParams)',
+          '_routeChanged(route.language, route.prefix, route.path)',
+          '_routeQueryParamsChanged(route.__queryParams)'
+        ];
+      }
+
+      constructor() {
+        super();
+        this.linkPaths('route.__queryParams', 'queryParams');
+        this.linkPaths('queryParams', 'route.__queryParams');
+      }
+
+      _locationChanged() {
+        let language = this.defaultLanguage;
+        let segments = this.path.split('/');
+
+        if (new RegExp(this.languageRegex, "i").test(segments[1])) {
+          language = segments[1];
+          segments.splice(1, 1);
+        }
+
+        let path = segments.join('/');
+
+        if (this.route &&
+            this.route.language === language &&
+            this.route.path === path &&
+            this.queryParams === this.route.__queryParams) {
+          return;
+        }
+
+        this.route = {
+          language: language,
+          prefix: '',
+          path: path,
+          __queryParams: this.queryParams
+        };
+      }
+
+      _routeChanged() {
+        if (!this.route) {
+          return;
+        }
+
+        if (this.route.language) {
+          this.path = '/' + this.route.language + this.route.prefix + this.route.path;
+        } else {
+          this.path = this.route.prefix + this.route.path;
+        }
+      }
+
+      _routeQueryParamsChanged(queryParams) {
+        if (!this.route) {
+          return;
+        }
+        this.queryParams = queryParams;
+      }
+
+      ready() {
+        super.ready();
+        this._isReady = true;
+      }
+
+      __computeRoutePath() {
+        this.path = this.useHashAsPath ? this.__hash : this.__path;
+      }
+
+      __onPathChanged() {
+        if (!this._isReady) {
+          return;
+        }
+
+        if (this.useHashAsPath) {
+          this.__hash = this.path;
+        } else {
+          this.__path = this.path;
+        }
+      }
+    }
+
+    customElements.define(HoloLocation.is, HoloLocation);
+  </script>
+</dom-module>

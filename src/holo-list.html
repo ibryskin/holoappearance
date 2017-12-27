@@ -1,5 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="holo-localize-behavior.html">
 <link rel="import" href="holo-category-data.html">
 <link rel="import" href="shared-styles.html">
 
@@ -21,6 +23,7 @@
 
     <holo-category-data
       id="categoryData"
+      language="[[language]]"
       category-name="[[routeData.category]]"
       category="{{category}}"
       failure="{{failure}}">
@@ -33,11 +36,12 @@
   </template>
 
   <script>
-    class HoloList extends Polymer.Element {
+    class HoloList extends Polymer.mixinBehaviors([HoloLocalizeBehavior], Polymer.Element) {
       static get is() { return 'holo-list'; }
 
       static get properties() {
         return {
+
           category: Object,
 
           route: Object,
@@ -51,7 +55,7 @@
 
           offline: {
             type: Boolean,
-            observer: '_offlineChanged'
+            //observer: '_offlineChanged'
           },
 
           failure: Boolean
@@ -78,20 +82,20 @@
         if (!visible) {
           return;
         }
-        this._changeSectionDebouncer = Polymer.Debouncer.debounce(this._changeSectionDebouncer,
-          Polymer.Async.microTask, () => {
-            if (category) {
-              this.dispatchEvent(new CustomEvent('change-section', {
-              bubbles: true, composed: true, detail: {
-                selectedPage: category.name,
-                title: category.title
-              }}));
-            } else {
-              this.dispatchEvent(new CustomEvent('show-invalid-url-warning', {
-                bubbles: true, composed: true }));
-            }
-          }
-        )
+        // this._changeSectionDebouncer = Polymer.Debouncer.debounce(this._changeSectionDebouncer,
+        //   Polymer.Async.microTask, () => {
+        //     if (category) {
+        //       this.dispatchEvent(new CustomEvent('change-section', {
+        //       bubbles: true, composed: true, detail: {
+        //         selectedPage: category.name,
+        //         title: category.title
+        //       }}));
+        //     } else {
+        //       this.dispatchEvent(new CustomEvent('show-invalid-url-warning', {
+        //         bubbles: true, composed: true }));
+        //     }
+        //   }
+        // )
       }
 
       _tryReconnect() {
@@ -105,7 +109,7 @@
       }
     }
 
-    window.customElements.define(HoloList.is, HoloList);
+    customElements.define(HoloList.is, HoloList);
 
   </script>
 </dom-module>

@@ -1,6 +1,6 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/holo-app.html",
   "fragments": [
     "src/lazy-resources.html"
   ],

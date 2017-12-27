@@ -1,0 +1,110 @@
+[
+  {
+    "name": "The+Chimpanzee",
+    "title": "The Chimpanzee",
+    "description": null,
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/001-B.jpg",
+        "largeImage": "data/images/001-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+Cat+of+breed+the+Sphynx",
+    "title": "The Cat of breed the Sphynx",
+    "description": null,
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/002-B.jpg",
+        "largeImage": "data/images/002-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+Pekinese",
+    "title": "The Pekinese",
+    "description": null,
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/003-B.jpg",
+        "largeImage": "data/images/003-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+Cat+Michel",
+    "title": "The Cat \"Michel\"",
+    "description": null,
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/004-B.jpg",
+        "largeImage": "data/images/004-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Spaniel",
+    "title": "Spaniel",
+    "description": null,
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/005-1-B.jpg",
+        "largeImage": "data/images/005-1-A.jpg"
+      },
+      {
+        "image": "data/images/005-2-B.jpg",
+        "largeImage": "data/images/005-2-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Siamese+kittens",
+    "title": "Siamese kittens",
+    "description": null,
+    "width": 0.4,
+    "height": 0.3,
+    "images": [
+      {
+        "image": "data/images/006-B.jpg",
+        "largeImage": "data/images/006-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+Lemur",
+    "title": "The Lemur",
+    "description": null,
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/007-B.jpg",
+        "largeImage": "data/images/007-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+Cat+Murka",
+    "title": "The Cat \"Murka\"",
+    "description": null,
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/008-B.jpg",
+        "largeImage": "data/images/008-A.jpg"
+      }
+    ]
+  }
+]

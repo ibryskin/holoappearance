@@ -1,0 +1,22 @@
+[
+  {
+    "name": "animal",
+    "title": "Holograms of animals"
+  },
+  {
+    "name": "museum",
+    "title": "Holograms of museum pieces"
+  },
+  {
+    "name": "art",
+    "title": "Art holograms"
+  },
+  {
+    "name": "ad",
+    "title": "Advertising holograms"
+  },
+  {
+    "name": "portrait",
+    "title": "Portrait holograms"
+  }
+]

@@ -3,34 +3,41 @@
 <dom-module id="holo-category-data">
   <script>
     (function () {
-      let categoryList = [
-        {
-          name: "animals",
-          title: "Holograms of animals"
-        },
-        {
-          name: "museum_pieces",
-          title: "Holograms of museum pieces"
-        },
-        {
-          name: "art",
-          title: "Art holograms"
-        },
-        {
-          name: "advertising",
-          title: "Advertising holograms"
-        },
-        {
-          name: "portraits",
-          title: "Portrait holograms"
-        }
-      ];
+      // let categoryList = [
+      //   {
+      //     name: "animals",
+      //     title: "Holograms of animals"
+      //   },
+      //   {
+      //     name: "museum",
+      //     title: "Holograms of museum pieces"
+      //   },
+      //   {
+      //     name: "art",
+      //     title: "Art holograms"
+      //   },
+      //   {
+      //     name: "ad",
+      //     title: "Advertising holograms"
+      //   },
+      //   {
+      //     name: "portraits",
+      //     title: "Portrait holograms"
+      //   }
+      // ];
+
+      let categoryList = [];
 
       class HoloCategoryData extends Polymer.Element {
 
         static get is() { return 'holo-category-data'; }
 
         static get properties() { return {
+
+          language: {
+            type: String,
+            value: 'en'
+          },
 
           categoryName: String,
 
@@ -39,13 +46,13 @@
           categories: {
             type: Array,
             value: categoryList,
-            readOnly: true,
+            //readOnly: true,
             notify: true
           },
 
           category: {
             type: Object,
-            computed: '_computeCategory(categoryName)',
+            computed: '_computeCategory(language, categoryName)',
             notify: true
           },
 
@@ -63,6 +70,15 @@
 
         }}
 
+        connectedCallback() {
+          super.connectedCallback();
+          this._fetchCategories(this.language, 1);
+        }
+
+        ready() {
+          super.ready();
+        }
+
         _getCategoryObject(categoryName) {
           for (let i = 0, c; c = this.categories[i]; ++i) {
             if (c.name === categoryName) {
@@ -71,9 +87,9 @@
           }
         }
 
-        _computeCategory(categoryName) {
+        _computeCategory(language, categoryName) {
           let categoryObj = this._getCategoryObject(categoryName);
-          this._fetchItems(categoryObj, 1);
+          this._fetchItems(language, categoryObj, 1);
           return categoryObj;
         }
 
@@ -88,13 +104,33 @@
           }
         }
 
-        _fetchItems(category, attempts) {
+        _fetchCategories(language, attempts) {
+          this._setFailure(false);
+          if (this.categories && this.categories.length > 0) {
+            return;
+          }
+          this._getResource({
+            url: 'data/' + language + '/categories.json',
+            onLoad(e) {
+              if (e.target.status === 200) {
+                JSON.parse(e.target.responseText).forEach(category => this.push('categories', category));
+              } else {
+                this._setFailure(true);
+              }
+            },
+            onError(e) {
+              this._setFailure(true);
+            }
+          })
+        }
+
+        _fetchItems(language, category, attempts) {
           this._setFailure(false);
           if (!category || category.items) {
             return;
           }
           this._getResource({
-            url: 'data/' + category.name + '.json',
+            url: 'data/' + language + '/' + category.name + '.json',
             onLoad(e) {
               if (e.target.status === 200) {
                 this.set('category.items', JSON.parse(e.target.responseText));
@@ -125,8 +161,9 @@
         }
 
         refresh() {
+          this._fetchCategories(this.language, 3);
           if (this.categoryName) {
-            this._fetchItems(this._getCategoryObject(this.categoryName), 3);
+            this._fetchItems(this.language, this._getCategoryObject(this.categoryName), 3);
           }
         }
 

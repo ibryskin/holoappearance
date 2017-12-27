@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "app-layout": "PolymerElements/app-layout#^2.0.0",
+    "app-localize-behavior": "PolymerElements/app-localize-behavior#^2.0.0",
     "app-route": "PolymerElements/app-route#^2.0.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
     "iron-icon": "PolymerElements/iron-icon#^2.0.0",
@@ -14,6 +15,9 @@
     "iron-pages": "PolymerElements/iron-pages#^2.0.0",
     "iron-selector": "PolymerElements/iron-selector#^2.0.0",
     "paper-icon-button": "PolymerElements/paper-icon-button#^2.0.0",
+    "paper-menu-button": "PolymerElements/paper-menu-button#^2.0.0",
+    "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
+    "paper-item": "PolymerElements/paper-item#^2.0.0",
     "polymer": "Polymer/polymer#^2.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
   },

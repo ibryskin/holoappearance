@@ -10,7 +10,15 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<!-- <link rel="import" href="../bower_components/neon-animations/web-animations.html"> -->
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button-animations.html">
 
+<link rel="import" href="holo-location.html">
+<link rel="import" href="holo-localize-behavior.html">
 <link rel="import" href="holo-category-data.html">
 <link rel="import" href="holo-home.html">
 
@@ -77,24 +85,25 @@
 
     </style>
 
-    <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
+    <holo-location route="{{route}}" url-space-regex="^[[rootPath]]" language-regex="(en|ru)" default-language="ru"></holo-location>
 
     <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
     </app-route>
 
-    <holo-category-data categories="{{categories}}"></holo-category-data>
+    <holo-category-data language=[[language]] categories="{{categories}}"></holo-category-data>
 
     <app-drawer-layout fullbleed narrow="{{narrow}}">
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[selectedPage]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="home" href="[[rootPath]]">Introduction</a>
+          <a name="home" href="[[rootPath]][[language]]/">{{localize('introduction')}}</a>
           <dom-repeat items="[[categories]]" as="category" initial-count="5">
             <template>
-              <a name="[[category.name]]" href="[[rootPath]]list/[[category.name]]">[[category.title]]</a>
+              <a name="[[category.name]]" href="[[rootPath]][[language]]/list/[[category.name]]">[[category.title]]</a>
             </template>
           </dom-repeat>
+          <a name="contact" href="[[rootPath]][[language]]/contact">{{localize('contact')}}</a>
         </iron-selector>
       </app-drawer>
 
@@ -105,50 +114,83 @@
           <app-toolbar>
             <paper-icon-button icon="holo-icons:menu" drawer-toggle></paper-icon-button>
             <paper-icon-button icon="holo-icons:arrow-back" aria-label="Go back"></paper-icon-button>
-            <div main-title>
-              <a href="[[rootPath]]">Art holograms from Russia</a>
-            </div>
+            <div main-title>{{localize('site-title')}}</div>
+            <!-- <paper-menu-button no-animations>
+              <paper-icon-button icon="holo-flags:gb" slot="dropdown-trigger"></paper-icon-button>
+              <paper-listbox slot="dropdown-content">
+                <paper-icon-item><iron-icon icon="holo-flags:gb" slot="item-icon"></iron-icon>English</paper-icon-item>
+                <paper-icon-item><iron-icon icon="holo-flags:ru" slot="item-icon"></iron-icon>Russian</paper-icon-item>
+              </paper-listbox>
+            </paper-menu-button>
+            <iron-icon icon="holo-flags:ru"></iron-icon> -->
           </app-toolbar>
         </app-header>
 
         <iron-pages role="main" selected="[[page]]" attr-for-selected="name" selected-attribute="visible" fallback-selection="404">
           <holo-home name="home"></holo-home>
-          <holo-list name="list" route="[[subroute]]" offline="[[offline]]"></holo-list>
+          <holo-list name="list" route="[[subroute]]" offline="[[offline]]" language=[[language]]></holo-list>
           <holo-detail name="detail" route="[[subroute]]" offline="[[offline]]"></holo-detail>
-          <holo-404-warning name="404"></holo-404-warning>
+          <holo-404 name="404"></holo-404>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
   </template>
 
   <script>
-    class HoloApp extends Polymer.Element {
+    class HoloApp extends Polymer.mixinBehaviors([HoloLocalizeBehavior], Polymer.Element) {
       static get is() {
         return 'holo-app';
       }
 
       static get properties() {
         return {
+
+          language: {
+            value: 'en',
+            observer: '_languageChanged'
+          },
+
+          categories: {
+            type: Array,
+            notify: true
+          },
+
           page: {
             type: String,
             reflectToAttribute: true,
-            observer: '_pageChanged',
+            observer: '_pageChanged'
           },
+
+          route: {
+            type: Object,
+            observer: '_routeChanged'
+          },
+
           routeData: Object,
+
           subroute: String,
+
           rootPath: String,
         };
       }
 
       static get observers() {
         return [
-          '_routePageChanged(routeData.page)',
+          '_routePageChanged(routeData.page)'
         ];
       }
 
       constructor() {
         super();
       }
+
+      // connectedCallback() {
+      //   super.connectedCallback();
+      //   this.language = this.route.language || 'en';
+      //   // if (this.route.path === this.rootPath) {
+      //   //   this.set('route.path', this.rootPath + 'en');
+      //   // }
+      // }
 
       ready() {
         super.ready();
@@ -160,8 +202,20 @@
         })
       }
 
+      _languageChanged(newValue, oldValue) {
+        this.loadResources('data/' + newValue + '/locales.json');
+      }
+
+      _routeChanged(route) {
+        // if (this.language === route.language) {
+        //   return;
+        // }
+        // this.language = this.route.language || 'en';
+      }
+
       _routePageChanged(page) {
         this.page = page || 'home';
+        this.language = this.route.language || 'en';
 
         // Close a non-persistent drawer when the page & route are changed.
         if (!this.$.drawer.persistent) {
@@ -239,7 +293,7 @@
         this.selectedPage = detail.selectedPage || '';
 
         if (detail.title) {
-          document.title = detail.title + ' - Art holograms from Russia';
+          document.title = detail.title + ' - ' + localize('site-title');
         }
       }
 
@@ -249,7 +303,7 @@
 
     }
 
-    window.customElements.define(HoloApp.is, HoloApp);
+    customElements.define(HoloApp.is, HoloApp);
 
   </script>
 </dom-module>
