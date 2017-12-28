@@ -1,16 +1,15 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="holo-localize-behavior.html">
 <link rel="import" href="holo-category-data.html">
-<link rel="import" href="shared-styles.html">
+<link rel="import" href="holo-common-styles.html">
 
 <dom-module id="holo-list">
   <template>
-    <style include="shared-styles">
+    <style include="holo-common-styles">
       :host {
         display: block;
-
+        color: #ffffff;
         padding: 10px;
       }
     </style>
@@ -55,7 +54,7 @@
 
           offline: {
             type: Boolean,
-            //observer: '_offlineChanged'
+            observer: '_offlineChanged'
           },
 
           failure: Boolean
@@ -82,20 +81,20 @@
         if (!visible) {
           return;
         }
-        // this._changeSectionDebouncer = Polymer.Debouncer.debounce(this._changeSectionDebouncer,
-        //   Polymer.Async.microTask, () => {
-        //     if (category) {
-        //       this.dispatchEvent(new CustomEvent('change-section', {
-        //       bubbles: true, composed: true, detail: {
-        //         selectedPage: category.name,
-        //         title: category.title
-        //       }}));
-        //     } else {
-        //       this.dispatchEvent(new CustomEvent('show-invalid-url-warning', {
-        //         bubbles: true, composed: true }));
-        //     }
-        //   }
-        // )
+        this._changeSectionDebouncer = Polymer.Debouncer.debounce(this._changeSectionDebouncer,
+          Polymer.Async.microTask, () => {
+            if (category) {
+              this.dispatchEvent(new CustomEvent('change-section', {
+              bubbles: true, composed: true, detail: {
+                selectedPage: category.name,
+                title: category.title
+              }}));
+            } else {
+              this.dispatchEvent(new CustomEvent('show-invalid-url-warning', {
+                bubbles: true, composed: true }));
+            }
+          }
+        )
       }
 
       _tryReconnect() {

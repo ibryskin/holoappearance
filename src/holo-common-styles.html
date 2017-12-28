@@ -1,0 +1,33 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="holo-common-styles">
+  <template>
+    <style>
+
+      :host {
+        padding: 16px;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      header {
+        text-align: center;
+      }
+
+      header > h1 {
+        margin: 0 0 4px 0;
+        font-size: 1.3em;
+        font-weight: 500;
+      }
+
+      @media (max-width: 767px) {
+        header > h1 {
+          font-size: 1.1em;
+        }
+      }
+
+    </style>
+  </template>
+</dom-module>

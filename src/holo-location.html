@@ -128,7 +128,7 @@
           return;
         }
 
-        if (this.route.language) {
+        if (this.route.language && this.route.language !== '') {
           this.path = '/' + this.route.language + this.route.prefix + this.route.path;
         } else {
           this.path = this.route.prefix + this.route.path;

@@ -1,0 +1,48 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="holo-localize-behavior.html">
+<link rel="import" href="holo-common-styles.html">
+
+<dom-module id="holo-contact">
+  <template>
+    <style include="holo-common-styles">
+      :host {
+        display: block;
+        color: #ffffff;
+      }
+    </style>
+    <header>
+      <h1>{{localize('contact-page-title')}}</h1>
+    </header>
+  </template>
+
+  <script>
+    class HoloContact extends Polymer.mixinBehaviors([HoloLocalizeBehavior], Polymer.Element) {
+
+      static get is() { return 'holo-contact'; }
+
+      static get properties() {
+        return {
+          visible: {
+            type: Boolean,
+            observer: '_visibleChanged'
+          }
+        }
+      }
+
+      _visibleChanged(visible) {
+        if (visible) {
+          this.dispatchEvent(new CustomEvent('change-section', {
+            bubbles: true,
+            composed: true,
+            detail: {
+              selectedPage: 'contact',
+              title: this.localize('contact')
+            }
+          }));
+        }
+      }
+    }
+
+    customElements.define(HoloContact.is, HoloContact);
+  </script>
+</dom-module>

@@ -66,6 +66,14 @@
         color: var(--app-secondary-color);
       }
 
+      [hidden] {
+        display: none !important;
+      }
+
+      :host(:not([page=detail])) .back-btn {
+        display: none;
+      }
+
       .drawer-list {
         margin: 0 20px;
       }
@@ -85,7 +93,7 @@
 
     </style>
 
-    <holo-location route="{{route}}" url-space-regex="^[[rootPath]]" language-regex="(en|ru)" default-language="ru"></holo-location>
+    <holo-location route="{{route}}" url-space-regex="^[[rootPath]]" language-regex="(en|ru)" default-language="en"></holo-location>
 
     <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
     </app-route>
@@ -113,7 +121,7 @@
         <app-header id="header" slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="holo-icons:menu" drawer-toggle></paper-icon-button>
-            <paper-icon-button icon="holo-icons:arrow-back" aria-label="Go back"></paper-icon-button>
+            <paper-icon-button class="back-btn" icon="holo-icons:arrow-back" aria-label="Go back"></paper-icon-button>
             <div main-title>{{localize('site-title')}}</div>
             <!-- <paper-menu-button no-animations>
               <paper-icon-button icon="holo-flags:gb" slot="dropdown-trigger"></paper-icon-button>
@@ -127,9 +135,10 @@
         </app-header>
 
         <iron-pages role="main" selected="[[page]]" attr-for-selected="name" selected-attribute="visible" fallback-selection="404">
-          <holo-home name="home"></holo-home>
+          <holo-home name="home" language="[[language]]"></holo-home>
           <holo-list name="list" route="[[subroute]]" offline="[[offline]]" language=[[language]]></holo-list>
           <holo-detail name="detail" route="[[subroute]]" offline="[[offline]]"></holo-detail>
+          <holo-contact name="contact" language=[[language]]></holo-home>
           <holo-404 name="404"></holo-404>
         </iron-pages>
       </app-header-layout>
@@ -161,10 +170,7 @@
             observer: '_pageChanged'
           },
 
-          route: {
-            type: Object,
-            observer: '_routeChanged'
-          },
+          route: Object,
 
           routeData: Object,
 
@@ -195,6 +201,7 @@
       ready() {
         super.ready();
         this.removeAttribute('unresolved');
+        this.addEventListener('change-section', (e) => this._onChangeSection(e));
         this.addEventListener('show-invalid-url-warning', (e) => this._onFallbackSelectionTriggered(e));
         Polymer.RenderStatus.afterNextRender(this, () => {
           window.addEventListener('online', (e) => this._notifyNetworkStatus(e));
@@ -204,13 +211,6 @@
 
       _languageChanged(newValue, oldValue) {
         this.loadResources('data/' + newValue + '/locales.json');
-      }
-
-      _routeChanged(route) {
-        // if (this.language === route.language) {
-        //   return;
-        // }
-        // this.language = this.route.language || 'en';
       }
 
       _routePageChanged(page) {
@@ -293,7 +293,9 @@
         this.selectedPage = detail.selectedPage || '';
 
         if (detail.title) {
-          document.title = detail.title + ' - ' + localize('site-title');
+          document.title = detail.title + ' - ' + this.localize('site-title');
+        } else {
+          document.title = this.localize('site-title');
         }
       }
 

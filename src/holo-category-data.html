@@ -3,30 +3,9 @@
 <dom-module id="holo-category-data">
   <script>
     (function () {
-      // let categoryList = [
-      //   {
-      //     name: "animals",
-      //     title: "Holograms of animals"
-      //   },
-      //   {
-      //     name: "museum",
-      //     title: "Holograms of museum pieces"
-      //   },
-      //   {
-      //     name: "art",
-      //     title: "Art holograms"
-      //   },
-      //   {
-      //     name: "ad",
-      //     title: "Advertising holograms"
-      //   },
-      //   {
-      //     name: "portraits",
-      //     title: "Portrait holograms"
-      //   }
-      // ];
+      let catalog = {};
 
-      let categoryList = [];
+      window.catalog = catalog;
 
       class HoloCategoryData extends Polymer.Element {
 
@@ -36,7 +15,13 @@
 
           language: {
             type: String,
-            value: 'en'
+            value: 'en',
+            observer: '_languageChanged'
+          },
+
+          catalog: {
+            type: Object,
+            value: catalog
           },
 
           categoryName: String,
@@ -45,14 +30,14 @@
 
           categories: {
             type: Array,
-            value: categoryList,
-            //readOnly: true,
+            computed: '_computeCategories(language)',
+            readOnly: true,
             notify: true
           },
 
           category: {
             type: Object,
-            computed: '_computeCategory(language, categoryName)',
+            computed: '_computeCategory(language, categories, categoryName)',
             notify: true
           },
 
@@ -70,16 +55,44 @@
 
         }}
 
-        connectedCallback() {
-          super.connectedCallback();
-          this._fetchCategories(this.language, 1);
+        _languageChanged(newValue, oldValue) {
+          this.unlinkPaths('categories');
+          this.linkPaths('categories', 'catalog.' + newValue);
         }
 
-        ready() {
-          super.ready();
+        _computeCategories(language) {
+          if (!this.catalog[language]) {
+            this.catalog[language] = [];
+          }
+          this._fetchCategories(language, 1);
+          return this.catalog[language];
         }
 
-        _getCategoryObject(categoryName) {
+        _fetchCategories(language, attempts) {
+          this._setFailure(false);
+          if (this.catalog[language] && this.catalog[language].length > 0) {
+            return;
+          }
+          this._getResource({
+            url: 'data/' + language + '/categories.json',
+            onLoad(e) {
+              if (e.target.status === 200) {
+                JSON.parse(e.target.responseText).forEach(category => this.push('catalog.' + language, category));
+                console.log(this.categories);
+              } else {
+                this._setFailure(true);
+              }
+            },
+            onError(e) {
+              this._setFailure(true);
+            }
+          })
+        }
+
+        _getCategoryObject(categories, categoryName) {
+          if (!categories || !categoryName) {
+            return;
+          }
           for (let i = 0, c; c = this.categories[i]; ++i) {
             if (c.name === categoryName) {
               return c;
@@ -87,10 +100,10 @@
           }
         }
 
-        _computeCategory(language, categoryName) {
-          let categoryObj = this._getCategoryObject(categoryName);
-          this._fetchItems(language, categoryObj, 1);
-          return categoryObj;
+        _computeCategory(language, categories, categoryName) {
+          let category = this._getCategoryObject(categories, categoryName);
+          this._fetchItems(language, category, 1);
+          return category;
         }
 
         _computeItem(items, itemName) {
@@ -102,26 +115,6 @@
               return item;
             }
           }
-        }
-
-        _fetchCategories(language, attempts) {
-          this._setFailure(false);
-          if (this.categories && this.categories.length > 0) {
-            return;
-          }
-          this._getResource({
-            url: 'data/' + language + '/categories.json',
-            onLoad(e) {
-              if (e.target.status === 200) {
-                JSON.parse(e.target.responseText).forEach(category => this.push('categories', category));
-              } else {
-                this._setFailure(true);
-              }
-            },
-            onError(e) {
-              this._setFailure(true);
-            }
-          })
         }
 
         _fetchItems(language, category, attempts) {
