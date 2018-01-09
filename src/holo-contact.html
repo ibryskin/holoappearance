@@ -4,15 +4,17 @@
 
 <dom-module id="holo-contact">
   <template>
+
     <style include="holo-common-styles">
       :host {
         display: block;
-        color: #ffffff;
       }
     </style>
+
     <header>
       <h1>{{localize('contact-page-title')}}</h1>
     </header>
+
   </template>
 
   <script>
@@ -30,7 +32,10 @@
       }
 
       _visibleChanged(visible) {
-        if (visible) {
+        if (!visible) {
+           return;
+        }
+        Polymer.RenderStatus.afterNextRender(this, () => {
           this.dispatchEvent(new CustomEvent('change-section', {
             bubbles: true,
             composed: true,
@@ -39,7 +44,7 @@
               title: this.localize('contact')
             }
           }));
-        }
+        });
       }
     }
 

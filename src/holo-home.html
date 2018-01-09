@@ -8,7 +8,6 @@
 
        :host {
         display: block;
-        color: #ffffff;
       }
 
     </style>
@@ -39,7 +38,10 @@
       }
 
       _visibleChanged(visible) {
-        if (visible) {
+        if (!visible) {
+          return;
+        }
+        Polymer.RenderStatus.afterNextRender(this, () => {
           this.dispatchEvent(new CustomEvent('change-section', {
             bubbles: true,
             composed: true,
@@ -48,7 +50,7 @@
               title: this.localize('introduction')
             }
           }));
-        }
+        });
       }
     }
 

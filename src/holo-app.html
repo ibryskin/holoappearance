@@ -10,12 +10,6 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
-<!-- <link rel="import" href="../bower_components/neon-animations/web-animations.html"> -->
-<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button-animations.html">
 
 <link rel="import" href="holo-location.html">
 <link rel="import" href="holo-localize-behavior.html">
@@ -27,7 +21,7 @@
     <style>
        :host {
         --app-primary-color: #000000;
-        --app-secondary-color: #ffffff;
+        --app-secondary-color: #ccc;
         --app-accent-color: #ff6600;
 
         display: block;
@@ -44,6 +38,10 @@
       app-header {
         color: #fff;
         background-color: rgba(0, 0, 0, 0.95);
+        --app-header-background-front-layer: {
+          background-image: url('../images/poster.jpg');
+          background-position: 50% 10%;
+        };
       }
 
       app-header paper-icon-button {
@@ -60,6 +58,8 @@
       iron-pages {
         max-width: 682px;
         margin: 0 auto;
+        background-color: #ccc;
+        color: #000;
       }
 
       paper-icon-button {
@@ -68,6 +68,11 @@
 
       [hidden] {
         display: none !important;
+      }
+
+      div[main-title] {
+        text-align: center;
+        font-size: 27px;
       }
 
       :host(:not([page=detail])) .back-btn {
@@ -93,7 +98,7 @@
 
     </style>
 
-    <holo-location route="{{route}}" url-space-regex="^[[rootPath]]" language-regex="(en|ru)" default-language="en"></holo-location>
+    <holo-location route="{{route}}" url-space-regex="^[[rootPath]]" language-regex="(en|ru)"></holo-location>
 
     <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
     </app-route>
@@ -103,7 +108,7 @@
     <app-drawer-layout fullbleed narrow="{{narrow}}">
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-        <app-toolbar>Menu</app-toolbar>
+        <app-toolbar></app-toolbar>
         <iron-selector selected="[[selectedPage]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="home" href="[[rootPath]][[language]]/">{{localize('introduction')}}</a>
           <dom-repeat items="[[categories]]" as="category" initial-count="5">
@@ -116,21 +121,13 @@
       </app-drawer>
 
       <!-- Main content -->
-      <app-header-layout has-scrolling-region>
+      <app-header-layout>
 
         <app-header id="header" slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="holo-icons:menu" drawer-toggle></paper-icon-button>
             <paper-icon-button class="back-btn" icon="holo-icons:arrow-back" aria-label="Go back"></paper-icon-button>
             <div main-title>{{localize('site-title')}}</div>
-            <!-- <paper-menu-button no-animations>
-              <paper-icon-button icon="holo-flags:gb" slot="dropdown-trigger"></paper-icon-button>
-              <paper-listbox slot="dropdown-content">
-                <paper-icon-item><iron-icon icon="holo-flags:gb" slot="item-icon"></iron-icon>English</paper-icon-item>
-                <paper-icon-item><iron-icon icon="holo-flags:ru" slot="item-icon"></iron-icon>Russian</paper-icon-item>
-              </paper-listbox>
-            </paper-menu-button>
-            <iron-icon icon="holo-flags:ru"></iron-icon> -->
           </app-toolbar>
         </app-header>
 
@@ -138,7 +135,7 @@
           <holo-home name="home" language="[[language]]"></holo-home>
           <holo-list name="list" route="[[subroute]]" offline="[[offline]]" language=[[language]]></holo-list>
           <holo-detail name="detail" route="[[subroute]]" offline="[[offline]]"></holo-detail>
-          <holo-contact name="contact" language=[[language]]></holo-home>
+          <holo-contact name="contact" language=[[language]]></holo-contact>
           <holo-404 name="404"></holo-404>
         </iron-pages>
       </app-header-layout>
@@ -190,13 +187,19 @@
         super();
       }
 
-      // connectedCallback() {
-      //   super.connectedCallback();
-      //   this.language = this.route.language || 'en';
-      //   // if (this.route.path === this.rootPath) {
-      //   //   this.set('route.path', this.rootPath + 'en');
-      //   // }
-      // }
+      connectedCallback() {
+        super.connectedCallback();
+
+        if (!this.route.language) {
+          if (navigator.language && navigator.language.substring(0, 2) === 'ru') {
+            this.set('route.language', 'ru');
+          }
+          this.language = this.route.language || 'en';
+        }
+        // if (this.route.path === this.rootPath) {
+        //   this.set('route.path', this.rootPath + 'en');
+        // }
+      }
 
       ready() {
         super.ready();
@@ -292,11 +295,13 @@
 
         this.selectedPage = detail.selectedPage || '';
 
-        if (detail.title) {
-          document.title = detail.title + ' - ' + this.localize('site-title');
-        } else {
-          document.title = this.localize('site-title');
-        }
+        Polymer.RenderStatus.afterNextRender(this, () => {
+          if (detail.title) {
+            document.title = detail.title + ' - ' + this.localize('site-title');
+          } else {
+            document.title = this.localize('site-title');
+          }
+        });
       }
 
       _onFallbackSelectionTriggered() {

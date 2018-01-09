@@ -9,7 +9,6 @@
     <style include="holo-common-styles">
       :host {
         display: block;
-        color: #ffffff;
         padding: 10px;
       }
     </style>
@@ -31,6 +30,13 @@
     <header>
       <h1>[[category.title]]</h1>
     </header>
+
+    <ul></ul>
+
+    <holo-network-warning
+      hidden$="[[!failure]]"
+      offline="[[offline]]"
+      on-try-reconnect="_tryReconnect"></holo-network-warning>
 
   </template>
 
@@ -75,6 +81,10 @@
       disconnectedCallback() {
         super.disconnectedCallback();
         this.isAttached = false;
+      }
+
+      _getListItems(items) {
+        return items || [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
       }
 
       _categoryChanged(category, visible) {
