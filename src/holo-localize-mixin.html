@@ -1,0 +1,153 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
+
+<script>
+    window.Holo = window.Holo || {};
+
+    Holo.Localize = Holo.Localize || {
+      defaultLanguage: 'en',
+      supportedLanguages: ['en', 'ru']
+    };
+
+    Holo.LocalizeMixin = (parent) => class extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], parent) {
+      static get properties() {
+        return {
+          defaultLanguage: {
+            type: String,
+            readOnly: true
+          },
+
+          language: {
+            type: String,
+            readOnly: true
+          },
+
+          navigatorLanguage: {
+            type: String,
+            readOnly: true
+          },
+
+          navigatorLanguages: {
+            type: String,
+            readOnly: true
+          },
+
+          supportedLanguages: {
+            type: String,
+            readOnly: true
+          },
+
+          pathToLocales: {
+            type: String,
+            value: 'locales/'
+          },
+        }
+      }
+
+      static get observers () {
+        return [
+          '_loadResourcesOnLanguageChanged(pathToLocales, language)'
+        ]
+      }
+
+      ready() {
+        super.ready();
+
+        if (!Holo.Localize._observers) {
+          Holo.Localize._observers = [];
+        }
+
+        Holo.Localize._observers.push(this);
+
+        const isInitialised = Holo.Localize.navigatorLanguage && Holo.Localize.navigatorLanguages;
+        if (!isInitialised) {
+          this._initGlobalVariables();
+        }
+
+        this.setProperties({
+          defaultLanguage: Holo.Localize.defaultLanguage,
+          language: Holo.Localize.language,
+          navigatorLanguage: Holo.Localize.navigatorLanguage,
+          navigatorLanguages: Holo.Localize.navigatorLanguages,
+          supportedLanguages: Holo.Localize.supportedLanguages
+        }, true);
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+
+        const index = Holo.Localize._observers.indexOf(this);
+        if (index !== -1) {
+          Holo.Localize._observers.splice(index, 1);
+        }
+      }
+
+      updateLanguage(language) {
+        Holo.Localize.language = language;
+        this.setProperties({ language: language }, true);
+        this._updateLangAttributeOfHtml(language);
+        Holo.Localize._observers.forEach((element) => {
+          element.setProperties({ language: language }, true);
+        });
+      }
+
+      _updateLangAttributeOfHtml(language) {
+        const html = document.getElementsByTagName('html')[0];
+        html.setAttribute('lang', language.substring(0, 2));
+      }
+
+      _loadResourcesOnLanguageChanged (pathToLocales, language) {
+        if (pathToLocales && language) {
+          const path = this.resolveUrl(`${pathToLocales}${language}.json`)
+          this.loadResources(path)
+        }
+      }
+
+      _initGlobalVariables () {
+        const defaultLanguage = Holo.Localize.defaultLanguage;
+        const supportedLanguages = Holo.Localize.supportedLanguages;
+        const navigatorLanguage = navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || defaultLanguage;
+
+        let navigatorLanguages = [navigatorLanguage];
+        if (navigator.languages && navigator.languages.length) {
+          navigatorLanguages = navigator.languages;
+        }
+
+        const globalLanguages = this._computeGlobalVariables(defaultLanguage, supportedLanguages, navigatorLanguage, navigatorLanguages);
+
+        Holo.Localize.language = globalLanguages.language;
+        Holo.Localize.navigatorLanguage = globalLanguages.navigatorLanguage;
+        Holo.Localize.navigatorLanguages = globalLanguages.navigatorLanguages;
+
+        this._updateLangAttributeOfHtml(Holo.Localize.language);
+      }
+
+      _computeGlobalVariables (defaultLanguage, supportedLanguages, navigatorLanguage, navigatorLanguages) {
+        let language = defaultLanguage;
+        let baseLanguages = [];
+
+        navigatorLanguages.forEach((navigatorLanguage) => {
+          const index = navigatorLanguage.indexOf('-');
+          if (index !== -1) {
+            baseLanguages.push(navigatorLanguage.substring(0, index));
+          }
+        });
+
+        navigatorLanguages = [...navigatorLanguages, ...baseLanguages];
+        navigatorLanguages = navigatorLanguages.filter((item, pos, self) => self.indexOf(item) === pos);
+
+        for (let i = 0; i < navigatorLanguages.length; ++i) {
+          if (supportedLanguages.indexOf(navigatorLanguages[i]) !== -1) {
+            language = navigatorLanguages[i];
+            break;
+          }
+        }
+
+        return {
+          language: language,
+          navigatorLanguage: navigatorLanguage,
+          navigatorLanguages: navigatorLanguages,
+        }
+      }
+    }
+</script>

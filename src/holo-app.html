@@ -12,7 +12,7 @@
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="holo-location.html">
-<link rel="import" href="holo-localize-behavior.html">
+<link rel="import" href="holo-localize-mixin.html">
 <link rel="import" href="holo-category-data.html">
 <link rel="import" href="holo-home.html">
 
@@ -21,14 +21,15 @@
     <style>
        :host {
         --app-primary-color: #000000;
-        --app-secondary-color: #ccc;
+        --app-secondary-color: #cccccc;
         --app-accent-color: #ff6600;
+        --app-drawer-width: 268px;
 
         display: block;
         position: relative;
         min-height: 100vh;
         color: var(--app-secondary-color);
-        background-color: var(--app-primary-color);
+        background-color: var(--app-secondary-color);
       }
 
       app-drawer-layout:not([narrow]) [drawer-toggle] {
@@ -36,34 +37,31 @@
       }
 
       app-header {
-        color: #fff;
-        background-color: rgba(0, 0, 0, 0.95);
+        color: #ffffff;
+        background-color: rgba(0, 0, 0, 0.9);
+        height: 200px;
         --app-header-background-front-layer: {
           background-image: url('../images/poster.jpg');
-          background-position: 50% 10%;
+          background-position: center center;
         };
       }
 
       app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
+        --paper-icon-button-ink-color: #ffffff;
       }
 
       app-drawer {
         z-index: 3;
         --app-drawer-content-container: {
-          background-color: #000000;
+          background-color: rgba(0, 0, 0, 0.9);
         }
       }
 
       iron-pages {
         max-width: 682px;
         margin: 0 auto;
-        background-color: #ccc;
-        color: #000;
-      }
-
-      paper-icon-button {
-        color: var(--app-secondary-color);
+        color: var(--app-primary-color);
+        background-color: var(--app-secondary-color);
       }
 
       [hidden] {
@@ -72,7 +70,11 @@
 
       div[main-title] {
         text-align: center;
-        font-size: 27px;
+        font-size: 30px;
+      }
+
+      div[condensed-title] {
+        font-size: 20px;
       }
 
       :host(:not([page=detail])) .back-btn {
@@ -105,7 +107,7 @@
 
     <holo-category-data language=[[language]] categories="{{categories}}"></holo-category-data>
 
-    <app-drawer-layout fullbleed narrow="{{narrow}}">
+    <app-drawer-layout fullbleed narrow="{{narrow}}" responsive-width="1023px">
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
         <app-toolbar></app-toolbar>
@@ -122,12 +124,14 @@
 
       <!-- Main content -->
       <app-header-layout>
-
-        <app-header id="header" slot="header" condenses reveals effects="waterfall">
+        <app-header id="header" slot="header" fixed condenses effects="waterfall resize-title blend-background parallax-background">
           <app-toolbar>
             <paper-icon-button icon="holo-icons:menu" drawer-toggle></paper-icon-button>
+            <div condensed-title>{{localize('site-title')}}</div>
             <paper-icon-button class="back-btn" icon="holo-icons:arrow-back" aria-label="Go back"></paper-icon-button>
-            <div main-title>{{localize('site-title')}}</div>
+          </app-toolbar>
+          <app-toolbar>
+            <div spacer main-title>{{localize('site-title')}}</div>
           </app-toolbar>
         </app-header>
 
@@ -143,7 +147,7 @@
   </template>
 
   <script>
-    class HoloApp extends Polymer.mixinBehaviors([HoloLocalizeBehavior], Polymer.Element) {
+    class HoloApp extends Holo.LocalizeMixin(Polymer.Element) {
       static get is() {
         return 'holo-app';
       }
@@ -151,10 +155,10 @@
       static get properties() {
         return {
 
-          language: {
-            value: 'en',
-            observer: '_languageChanged'
-          },
+          // language: {
+          //   value: 'en',
+          //   observer: '_languageChanged'
+          // },
 
           categories: {
             type: Array,
@@ -212,9 +216,9 @@
         })
       }
 
-      _languageChanged(newValue, oldValue) {
-        this.loadResources('data/' + newValue + '/locales.json');
-      }
+      // _languageChanged(newValue, oldValue) {
+      //   this.loadResources('data/' + newValue + '/locales.json');
+      // }
 
       _routePageChanged(page) {
         this.page = page || 'home';

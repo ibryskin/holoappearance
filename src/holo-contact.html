@@ -1,5 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="holo-localize-behavior.html">
+<link rel="import" href="holo-localize-mixin.html">
 <link rel="import" href="holo-common-styles.html">
 
 <dom-module id="holo-contact">
@@ -18,7 +18,7 @@
   </template>
 
   <script>
-    class HoloContact extends Polymer.mixinBehaviors([HoloLocalizeBehavior], Polymer.Element) {
+    class HoloContact extends Holo.LocalizeMixin(Polymer.Element) {
 
       static get is() { return 'holo-contact'; }
 
