@@ -6,7 +6,7 @@
 
     Holo.Localize = Holo.Localize || {
       defaultLanguage: 'en',
-      supportedLanguages: ['en', 'ru']
+      supportedLanguages: ['en']
     };
 
     Holo.LocalizeMixin = (parent) => class extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], parent) {
@@ -50,8 +50,8 @@
         ]
       }
 
-      ready() {
-        super.ready();
+      connectedCallback() {
+        super.connectedCallback();
 
         if (!Holo.Localize._observers) {
           Holo.Localize._observers = [];

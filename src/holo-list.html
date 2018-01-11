@@ -41,10 +41,7 @@
       </dom-repeat>
     </ul>
 
-    <holo-network-warning
-      hidden$="[[!failure]]"
-      offline="[[offline]]"
-      on-try-reconnect="_tryReconnect"></holo-network-warning>
+    <holo-network-warning hidden$="[[!failure]]" offline="[[offline]]" on-try-reconnect="_tryReconnect"></holo-network-warning>
 
   </template>
 
@@ -108,8 +105,7 @@
                 title: category.title
               }}));
             } else {
-              this.dispatchEvent(new CustomEvent('show-invalid-url-warning', {
-                bubbles: true, composed: true }));
+              // this.dispatchEvent(new CustomEvent('show-invalid-url-warning', { bubbles: true, composed: true }));
             }
           }
         )

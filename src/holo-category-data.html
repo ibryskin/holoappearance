@@ -3,7 +3,8 @@
 <dom-module id="holo-category-data">
   <script>
     (function () {
-      let catalog = {};
+      const catalog = {};
+      const requests = {};
 
       window.catalog = catalog;
 
@@ -15,7 +16,6 @@
 
           language: {
             type: String,
-            value: 'en',
             observer: '_languageChanged'
           },
 
@@ -30,14 +30,15 @@
 
           categories: {
             type: Array,
-            computed: '_computeCategories(language)',
-            readOnly: true,
-            notify: true
+            // computed: '_computeCategories(language)',
+            // readOnly: true,
+            notify: true,
+            value: []
           },
 
           category: {
             type: Object,
-            computed: '_computeCategory(language, categories, categoryName)',
+            computed: '_computeCategory(categories.*, categoryName)',
             notify: true
           },
 
@@ -55,9 +56,14 @@
 
         }}
 
-        _languageChanged(newValue, oldValue) {
-          this.unlinkPaths('categories');
-          this.linkPaths('categories', 'catalog.' + newValue);
+        _languageChanged(language) {
+          //this.unlinkPaths('categories');
+          if (!this.catalog[language]) {
+            this.catalog[language] = [];
+            this._fetchCategories(language, 1);
+          }
+          //this.linkPaths('categories', 'catalog.' + language);
+          this.set('categories', this.catalog[language]);
         }
 
         _computeCategories(language) {
@@ -77,8 +83,7 @@
             url: 'data/' + language + '/categories.json',
             onLoad(e) {
               if (e.target.status === 200) {
-                JSON.parse(e.target.responseText).forEach(category => this.push('catalog.' + language, category));
-                console.log(this.categories);
+                JSON.parse(e.target.responseText).forEach(category => this.push('categories', category));
               } else {
                 this._setFailure(true);
               }
@@ -100,9 +105,10 @@
           }
         }
 
-        _computeCategory(language, categories, categoryName) {
-          let category = this._getCategoryObject(categories, categoryName);
-          this._fetchItems(language, category, 1);
+        _computeCategory(categories, categoryName) {
+          console.log(JSON.stringify(this.categories), categoryName);
+          let category = this._getCategoryObject(this.categories, categoryName);
+          this._fetchItems(this.language, category, 1);
           return category;
         }
 
@@ -138,9 +144,13 @@
         }
 
         _getResource(rq, attempts) {
-          let xhr = new XMLHttpRequest();
+          if (requests[rq.url]) {
+            return;
+          }
+          const xhr = new XMLHttpRequest();
           xhr.addEventListener('load', rq.onLoad.bind(this));
           xhr.addEventListener('error', (e) => {
+            requests[rq.url] = false;
             if (attempts > 1) {
               this._getResourceDebouncer = Polymer.Debouncer.debounce(this._getResourceDebouncer,
                 Polymer.Async.timeOut.after(200), this._getResource.bind(this, rq, attempts - 1));
@@ -151,6 +161,7 @@
 
           xhr.open('GET', rq.url);
           xhr.send();
+          requests[rq.url] = true;
         }
 
         refresh() {

@@ -11,14 +11,14 @@
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
-<link rel="import" href="holo-location.html">
 <link rel="import" href="holo-localize-mixin.html">
 <link rel="import" href="holo-category-data.html">
 <link rel="import" href="holo-home.html">
+<link rel="import" href="holo-button.html">
 
 <dom-module id="holo-app">
   <template>
-    <style>
+    <style include="holo-button">
        :host {
         --app-primary-color: #000000;
         --app-secondary-color: #cccccc;
@@ -100,7 +100,7 @@
 
     </style>
 
-    <holo-location route="{{route}}" url-space-regex="^[[rootPath]]" language-regex="(en|ru)"></holo-location>
+    <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
 
     <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
     </app-route>
@@ -112,14 +112,18 @@
       <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
         <app-toolbar></app-toolbar>
         <iron-selector selected="[[selectedPage]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="home" href="[[rootPath]][[language]]/">{{localize('introduction')}}</a>
+          <a name="home" href="[[rootPath]]">{{localize('introduction')}}</a>
           <dom-repeat items="[[categories]]" as="category" initial-count="5">
             <template>
-              <a name="[[category.name]]" href="[[rootPath]][[language]]/list/[[category.name]]">[[category.title]]</a>
+              <a name="[[category.name]]" href="[[rootPath]]list/[[category.name]]">[[category.title]]</a>
             </template>
           </dom-repeat>
-          <a name="contact" href="[[rootPath]][[language]]/contact">{{localize('contact')}}</a>
+          <a name="contact" href="[[rootPath]]contact">{{localize('contact')}}</a>
         </iron-selector>
+        <hr />
+        <holo-button>
+          <button on-click="_changeLanguage">Change language</button>
+        </holo-button>
       </app-drawer>
 
       <!-- Main content -->
@@ -155,11 +159,6 @@
       static get properties() {
         return {
 
-          // language: {
-          //   value: 'en',
-          //   observer: '_languageChanged'
-          // },
-
           categories: {
             type: Array,
             notify: true
@@ -191,20 +190,6 @@
         super();
       }
 
-      connectedCallback() {
-        super.connectedCallback();
-
-        if (!this.route.language) {
-          if (navigator.language && navigator.language.substring(0, 2) === 'ru') {
-            this.set('route.language', 'ru');
-          }
-          this.language = this.route.language || 'en';
-        }
-        // if (this.route.path === this.rootPath) {
-        //   this.set('route.path', this.rootPath + 'en');
-        // }
-      }
-
       ready() {
         super.ready();
         this.removeAttribute('unresolved');
@@ -216,15 +201,9 @@
         })
       }
 
-      // _languageChanged(newValue, oldValue) {
-      //   this.loadResources('data/' + newValue + '/locales.json');
-      // }
-
       _routePageChanged(page) {
         this.page = page || 'home';
-        this.language = this.route.language || 'en';
 
-        // Close a non-persistent drawer when the page & route are changed.
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
         }
@@ -310,6 +289,10 @@
 
       _onFallbackSelectionTriggered() {
         this.page = '404';
+      }
+
+      _changeLanguage() {
+        this.updateLanguage(this.language === 'ru' ? 'en' : 'ru');
       }
 
     }

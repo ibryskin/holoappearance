@@ -1,7 +1,7 @@
 [
   {
     "name": "The+Chimpanzee",
-    "title": "The Chimpanzee",
+    "title": "Шимпанзе",
     "description": null,
     "width": 0.3,
     "height": 0.4,
@@ -14,7 +14,7 @@
   },
   {
     "name": "The+Cat+of+breed+the+Sphynx",
-    "title": "The Cat of breed the Sphynx",
+    "title": "Кот породы Сфинкс",
     "description": null,
     "width": 0.3,
     "height": 0.4,
@@ -27,7 +27,7 @@
   },
   {
     "name": "The+Pekinese",
-    "title": "The Pekinese",
+    "title": "Пекинес",
     "description": null,
     "width": 0.3,
     "height": 0.4,
@@ -40,7 +40,7 @@
   },
   {
     "name": "The+Cat+Michel",
-    "title": "The Cat \"Michel\"",
+    "title": "Кошка \"Мишель\"",
     "description": null,
     "width": 0.3,
     "height": 0.4,
@@ -53,7 +53,7 @@
   },
   {
     "name": "Spaniel",
-    "title": "Spaniel",
+    "title": "Спаниель",
     "description": null,
     "width": 0.3,
     "height": 0.4,
@@ -70,7 +70,7 @@
   },
   {
     "name": "Siamese+kittens",
-    "title": "Siamese kittens",
+    "title": "Сиамские котята",
     "description": null,
     "width": 0.4,
     "height": 0.3,
@@ -83,7 +83,7 @@
   },
   {
     "name": "The+Lemur",
-    "title": "The Lemur",
+    "title": "Лемур",
     "description": null,
     "width": 0.3,
     "height": 0.4,
@@ -96,7 +96,7 @@
   },
   {
     "name": "The+Cat+Murka",
-    "title": "The Cat \"Murka\"",
+    "title": "Кошка \"Мурка\"",
     "description": null,
     "width": 0.3,
     "height": 0.4,
