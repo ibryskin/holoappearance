@@ -140,10 +140,10 @@
         </app-header>
 
         <iron-pages role="main" selected="[[page]]" attr-for-selected="name" selected-attribute="visible" fallback-selection="404">
-          <holo-home name="home" language="[[language]]"></holo-home>
-          <holo-list name="list" route="[[subroute]]" offline="[[offline]]" language=[[language]]></holo-list>
+          <holo-home name="home" offline=[[offline]]]></holo-home>
+          <holo-list name="list" route="[[subroute]]" offline="[[offline]]"></holo-list>
           <holo-detail name="detail" route="[[subroute]]" offline="[[offline]]"></holo-detail>
-          <holo-contact name="contact" language=[[language]]></holo-contact>
+          <holo-contact name="contact" offline="[[offline]]"></holo-contact>
           <holo-404 name="404"></holo-404>
         </iron-pages>
       </app-header-layout>

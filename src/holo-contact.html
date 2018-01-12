@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="holo-localize-mixin.html">
 <link rel="import" href="holo-common-styles.html">
+<link rel="import" href="holo-markdown.html">
 
 <dom-module id="holo-contact">
   <template>
@@ -15,6 +16,10 @@
       <h1>{{localize('contact-page-title')}}</h1>
     </header>
 
+    <holo-markdown id="contact" hidden$=[[failure]] failure={{failure}}></holo-markdown>
+
+    <holo-network-warning hidden$="[[!failure]]" offline="[[offline]]" on-try-reconnect="_tryReconnect"></holo-network-warning>
+
   </template>
 
   <script>
@@ -24,11 +29,35 @@
 
       static get properties() {
         return {
+
           visible: {
             type: Boolean,
             observer: '_visibleChanged'
+          },
+
+          language: {
+            type: String,
+            observer: '_languageChanged'
+          },
+
+          failure: Boolean,
+
+          offline: {
+            type: Boolean,
+            observer: '_offlineChanged'
           }
+
         }
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this.isAttached = true;
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        this.isAttached = false;
       }
 
       _visibleChanged(visible) {
@@ -45,6 +74,20 @@
             }
           }));
         });
+      }
+
+      _languageChanged(language) {
+        this.$.contact.source = this.rootPath + 'data/' + language + '/contact.md';
+      }
+
+      _tryReconnect() {
+        this.$.contact.refresh();
+      }
+
+      _offlineChanged(offline) {
+        if (!offline && this.isAttached) {
+          this.$.contact.refresh();
+        }
       }
     }
 

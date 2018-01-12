@@ -1,0 +1,72 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/marked-element/marked-element.html">
+
+<dom-module id="holo-markdown">
+
+  <template>
+    <marked-element id="contact" on-marked-loadend="_onLoadEnd" on-marked-request-error="_onError">
+      <div slot="markdown-html"></div>
+    </marked-element>
+  </template>
+
+  <script>
+
+    class HoloMarkdown extends Polymer.Element {
+
+      static get is() { return 'holo-markdown'; }
+
+      static get properties() {
+        return {
+          source: {
+            type: String,
+            observer: '_sourceChanged'
+          },
+
+          cache: {
+            type: Object,
+            readOnly: true,
+            value: {}
+          },
+
+          failure: {
+            type: Boolean,
+            readOnly: true,
+            notify: true
+          },
+
+        }
+      }
+
+      refresh() {
+        this._fetch(this.source);
+      }
+
+      _sourceChanged(source) {
+        this._fetch(source);
+      }
+
+      _fetch(source) {
+        this._setFailure(false);
+        if (this.cache[source]) {
+          this.$.contact.markdown = this.cache[source];
+        } else {
+          this.$.contact._request(source);
+        }
+      }
+
+      _onLoadEnd(e) {
+        if (e.detail.target.status === 0 || (e.detail.target.status >= 200 && e.detail.target.status < 300)) {
+          this.cache[this.source] = e.detail.target.response;
+        }
+      }
+
+      _onError(e) {
+        this._setFailure(true);
+        e.preventDefault();
+      }
+    }
+
+    customElements.define(HoloMarkdown.is, HoloMarkdown);
+
+  </script>
+</dom-module>

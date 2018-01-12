@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="holo-localize-mixin.html">
 <link rel="import" href="holo-button.html">
 <link rel="import" href="holo-icons.html">
 
@@ -11,13 +12,13 @@
         display: block;
         padding: 40px 20px;
         text-align: center;
-        color: var(--app-secondary-color);
+        color: var(--app-primary-color);
       }
 
       iron-icon {
         display: inline-block;
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
       }
 
       h1 {
@@ -36,21 +37,24 @@
     </style>
 
     <div hidden$="[[offline]]">
-      <h1>Couldn't reach the server</h1>
+      <iron-icon icon="holo-icons:error"></iron-icon>
+      <h1>[[localize('network-warning-failure')]]</h1>
+      <p>[[localize('network-warning-failure-comment')]]</p>
     </div>
     <div hidden$="[[!offline]]">
       <iron-icon icon="holo-icons:perm-scan-wifi"></iron-icon>
-      <h1>No internet connection</h1>
-      <p>Check if your device is connected to a mobile network or WiFi.</p>
+      <h1>[[localize('network-warning-offline')]]</h1>
+      <p>[[localize('network-warning-offline-comment')]]</p>
     </div>
     <holo-button>
-      <button on-click="_tryReconnect">Try Again</button>
+      <button on-click="_tryReconnect">[[localize('network-warning-try-again')]]</button>
     </holo-button>
   </template>
 
   <script>
 
-    class HoloNetworkWarning extends Polymer.Element {
+    class HoloNetworkWarning extends Holo.LocalizeMixin(Polymer.Element) {
+
       static get is() { return 'holo-network-warning'; }
 
       static get properties() {

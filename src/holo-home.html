@@ -1,7 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/marked-element/marked-element.html">
 <link rel="import" href="holo-common-styles.html">
 <link rel="import" href="holo-localize-mixin.html">
+<link rel="import" href="holo-markdown.html">
 
 <dom-module id="holo-home">
   <template>
@@ -17,12 +17,10 @@
     <header>
       <h1>{{localize('home-page-title')}}</h1>
     </header>
-    <marked-element>
-      <div slot="markdown-html"></div>
-      <script type="text/markdown" src$="[[src]]">
-        {{localize('loading')}}
-      </script>
-    </marked-element>
+
+    <holo-markdown id="about" hidden$=[[failure]] failure={{failure}}></holo-markdown>
+
+    <holo-network-warning hidden$="[[!failure]]" offline="[[offline]]" on-try-reconnect="_tryReconnect"></holo-network-warning>
   </template>
 
   <script>
@@ -47,10 +45,24 @@
             observer: '_languageChanged'
           },
 
-          src: {
-            type: String
+          failure: Boolean,
+
+          offline: {
+            type: Boolean,
+            observer: '_offlineChanged'
           }
+
         }
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this.isAttached = true;
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        this.isAttached = false;
       }
 
       _visibleChanged(visible) {
@@ -70,7 +82,17 @@
       }
 
       _languageChanged(language) {
-        this.src = this.rootPath + 'data/' + language + "/about.md";
+        this.$.about.source = this.rootPath + 'data/' + language + '/about.md';
+      }
+
+      _tryReconnect() {
+        this.$.about.refresh();
+      }
+
+      _offlineChanged(offline) {
+        if (!offline && this.isAttached) {
+          this.$.about.refresh();
+        }
       }
     }
 

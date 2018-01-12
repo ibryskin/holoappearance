@@ -3,8 +3,12 @@
     "site-title": "Art holograms from Russia",
     "home-page-title": "Introduction",
     "contact-page-title": "Contacts",
-    "loading": "Loading...",
     "introduction": "Introduction",
-    "contact": "Contacts"
+    "contact": "Contacts",
+    "network-warning-failure": "Couldn't reach the server",
+    "network-warning-failure-comment": "",
+    "network-warning-offline": "No internet connection",
+    "network-warning-offline-comment": "Check if your device is connected to a mobile network or WiFi.",
+    "network-warning-try-again": "Try Again"
   }
 }
