@@ -1,0 +1,42 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="holo-localize-mixin.html">
+
+<dom-module id="holo-list-item">
+  <template>
+    <style>
+      :host {
+        @apply --layout-vertical;
+        /*@apply --layout-center-justified; */
+        text-align: center;
+        margin: 0 48px;
+      }
+    </style>
+    <paper-card image="[[_getItemImage(item)]]">
+      <div class="card-content">
+          <div class="title">[[item.title]]</div>
+      </div>
+    </paper-card>
+  </template>
+  <script>
+
+    class HoloListItem extends Holo.LocalizeMixin(Polymer.Element) {
+      static get is() { return 'holo-list-item'; }
+
+      static get properties() {
+        return {
+          item: Object
+        }
+      }
+
+      _getItemImage(item) {
+        if (item.images && item.images[0]) {
+          return item.images[0].image;
+        }
+      }
+    }
+
+    customElements.define(HoloListItem.is, HoloListItem);
+
+  </script>
+</dom-module>

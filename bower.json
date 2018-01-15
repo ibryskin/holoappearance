@@ -20,7 +20,9 @@
     "paper-item": "PolymerElements/paper-item#^2.0.0",
     "polymer": "Polymer/polymer#^2.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
-    "marked-element": "PolymerElements/marked-element#^2.3.3"
+    "marked-element": "PolymerElements/marked-element#^2.3.3",
+    "paper-carousel": "Redbility/paper-carousel#^1.2.5",
+    "paper-card": "PolymerElements/paper-card#^2.0.0"
   },
   "resolutions": {
     "polymer": "^2.0.0"
