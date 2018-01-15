@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "name": "Clocks+Tissot",
+    "title": "Clocks \"Tissot\"",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/060-B.jpg",
+        "largeImage": "data/images/060-A.jpg"
+      },
+      {
+        "image": "data/images/061-B.jpg",
+        "largeImage": "data/images/061-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Cigarettes+Peter+I",
+    "title": "Cigarettes \"Peter I\"",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/062-B.jpg",
+        "largeImage": "data/images/062-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+science+and+practice",
+    "title": "The science and practice",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/063-B.jpg",
+        "largeImage": "data/images/063-A.jpg"
+      }
+    ]
+  }
+]

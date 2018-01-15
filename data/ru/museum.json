@@ -1,1 +1,165 @@
-[]
+[
+  {
+    "name": "The+Rickets",
+    "title": "Рахит",
+    "origin": "Из знаменитой коллекции голландского патологоанатома Феликса Рюйша XVI век, закупленной Петром I.",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/009-B.jpg",
+        "largeImage": "data/images/009-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Siamese+twins",
+    "title": "Сиамские близнецы",
+    "origin": "Из знаменитой коллекции голландского патологоанатома Феликса Рюйша XVI век, закупленной Петром I.",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/010-B.jpg",
+        "largeImage": "data/images/010-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Blood+system+of+a+liver",
+    "title": "Кровеносная система печени",
+    "origin": "Из знаменитой коллекции голландского патологоанатома Феликса Рюйша XVI век, закупленной Петром I.",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/011-B.jpg",
+        "largeImage": "data/images/011-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+Hottej",
+    "title": "Фарфоровая статуэтка – \"Хоттей\" XIX век Япония",
+    "origin": "Из коллекции музея этнографии народов мира",
+    "width": 0.6,
+    "height": 0.8,
+    "images": [
+      {
+        "image": "data/images/012-1-B.jpg",
+        "largeImage": "data/images/012-1-A.jpg"
+      },
+      {
+        "image": "data/images/012-2-B.jpg",
+        "largeImage": "data/images/012-2-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+Hunter+with+the+child",
+    "title": "Охотник с ребенком",
+    "description": "Императорский Фарфоровый завод, г. Санкт-Петербург",
+    "origin": "Из коллекции Эрмитажа",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/013-B.jpg",
+        "largeImage": "data/images/013-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Terracotta+figurines+from+excavation+Pantikopii",
+    "title": "Терракотовые статуэтки из раскопок Пантикопии",
+    "origin": "Из коллекции Эрмитажа",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/014-B.jpg",
+        "largeImage": "data/images/014-A.jpg"
+      },
+      {
+        "image": "data/images/015-B.jpg",
+        "largeImage": "data/images/015-A.jpg"
+      },
+      {
+        "image": "data/images/016-B.jpg",
+        "largeImage": "data/images/016-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "From+the+Indian+collection",
+    "title": "Из индийской коллекции",
+    "origin": "Из коллекции Эрмитажа",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/017-B.jpg",
+        "largeImage": "data/images/017-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "From+a+collection+of+Scythian+gold",
+    "title": "Из коллекции Скифского золота",
+    "origin": "Из коллекции Эрмитажа",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/018-B.jpg",
+        "largeImage": "data/images/018-A.jpg"
+      },
+      {
+        "image": "data/images/019-B.jpg",
+        "largeImage": "data/images/019-A.jpg"
+      },
+      {
+        "image": "data/images/020-B.jpg",
+        "largeImage": "data/images/020-A.jpg"
+      },
+      {
+        "image": "data/images/021-B.jpg",
+        "largeImage": "data/images/021-A.jpg"
+      },
+      {
+        "image": "data/images/022-B.jpg",
+        "largeImage": "data/images/022-A.jpg"
+      },
+      {
+        "image": "data/images/023-B.jpg",
+        "largeImage": "data/images/023-A.jpg"
+      },
+      {
+        "image": "data/images/024-B.jpg",
+        "largeImage": "data/images/024-A.jpg"
+      },
+      {
+        "image": "data/images/025-B.jpg",
+        "largeImage": "data/images/025-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Satires+and+the+Nymph",
+    "title": "Бронзовая скульптура \"Сатир и Нимфа\"",
+    "description": "XIX век, автор Clodion",
+    "origin": "Из частной коллекции",
+    "width": 0.6,
+    "height": 0.8,
+    "images": [
+      {
+        "image": "data/images/026-1-B.jpg",
+        "largeImage": "data/images/026-1-A.jpg"
+      },
+      {
+        "image": "data/images/026-2-B.jpg",
+        "largeImage": "data/images/026-2-A.jpg"
+      }
+    ]
+  }
+]

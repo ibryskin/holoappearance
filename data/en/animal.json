@@ -2,7 +2,6 @@
   {
     "name": "The+Chimpanzee",
     "title": "The Chimpanzee",
-    "description": null,
     "width": 0.3,
     "height": 0.4,
     "images": [
@@ -15,7 +14,6 @@
   {
     "name": "The+Cat+of+breed+the+Sphynx",
     "title": "The Cat of breed the Sphynx",
-    "description": null,
     "width": 0.3,
     "height": 0.4,
     "images": [
@@ -28,7 +26,6 @@
   {
     "name": "The+Pekinese",
     "title": "The Pekinese",
-    "description": null,
     "width": 0.3,
     "height": 0.4,
     "images": [
@@ -41,7 +38,6 @@
   {
     "name": "The+Cat+Michel",
     "title": "The Cat \"Michel\"",
-    "description": null,
     "width": 0.3,
     "height": 0.4,
     "images": [
@@ -54,7 +50,6 @@
   {
     "name": "Spaniel",
     "title": "Spaniel",
-    "description": null,
     "width": 0.3,
     "height": 0.4,
     "images": [
@@ -71,7 +66,6 @@
   {
     "name": "Siamese+kittens",
     "title": "Siamese kittens",
-    "description": null,
     "width": 0.4,
     "height": 0.3,
     "images": [
@@ -84,7 +78,6 @@
   {
     "name": "The+Lemur",
     "title": "The Lemur",
-    "description": null,
     "width": 0.3,
     "height": 0.4,
     "images": [
@@ -97,7 +90,6 @@
   {
     "name": "The+Cat+Murka",
     "title": "The Cat \"Murka\"",
-    "description": null,
     "width": 0.3,
     "height": 0.4,
     "images": [

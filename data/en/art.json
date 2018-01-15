@@ -1,1 +1,431 @@
-[]
+[
+  {
+    "name": "The+Image+of+the+Christ",
+    "title": "The Image of the Christ",
+    "description": "(the modern sculptor)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/027-B.jpg",
+        "largeImage": "data/images/027-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Negress",
+    "title": "\"Negress\"",
+    "description": "(Design-composition)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/028-B.jpg",
+        "largeImage": "data/images/028-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Optimist",
+    "title": "\"Optimist\"",
+    "description": "(Design-composition)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/029-B.jpg",
+        "largeImage": "data/images/029-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Sea-bottom",
+    "title": "\"Sea-bottom\"",
+    "description": "(Design-composition)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/030-B.jpg",
+        "largeImage": "data/images/030-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Sensuality",
+    "title": "\"Sensuality\"",
+    "description": "(Design-composition)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/031-B.jpg",
+        "largeImage": "data/images/031-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Paradise+kushchi",
+    "title": "\"Paradise kushchi\"",
+    "description": "(Design-composition)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/032-B.jpg",
+        "largeImage": "data/images/032-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Boatman",
+    "title": "\"Boatman\"",
+    "description": "(Design-composition)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/033-B.jpg",
+        "largeImage": "data/images/033-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Roses",
+    "title": "\"Roses\"",
+    "description": "(Design-composition)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/034-B.jpg",
+        "largeImage": "data/images/034-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Orchid",
+    "title": "\"Orchid\"",
+    "description": "(Design-composition)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/035-B.jpg",
+        "largeImage": "data/images/035-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Lilac",
+    "title": "\"Lilac\"",
+    "description": "(Design-composition)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/036-B.jpg",
+        "largeImage": "data/images/036-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Flowers",
+    "title": "\"Flowers\"",
+    "description": "(Design-composition)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/037-B.jpg",
+        "largeImage": "data/images/037-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Violin",
+    "title": "\"Violin\"",
+    "description": "(Design-composition)",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/038-B.jpg",
+        "largeImage": "data/images/038-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Among+the+worlds",
+    "title": "\"Among the worlds\"",
+    "description": "(An art composition) ",
+    "origin": "Authors A.Prostev, V.Bryskin",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/039-1-B.jpg",
+        "largeImage": "data/images/039-1-A.jpg"
+      },
+      {
+        "image": "data/images/039-2-B.jpg",
+        "largeImage": "data/images/039-2-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Danaja",
+    "title": "\"Danaja\"",
+    "description": "(An art composition)",
+    "origin": "Authors A.Prostev, V.Bryskin",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/040-B.jpg",
+        "largeImage": "data/images/040-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+all-seeing+eye",
+    "title": "\"The all-seeing eye\"",
+    "description": "(An art composition)",
+    "origin": "Authors A.Prostev, V.Bryskin",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/041-B.jpg",
+        "largeImage": "data/images/041-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Occurrence",
+    "title": "\"Occurrence\"",
+    "description": "(An art composition)",
+    "origin": "Authors A.Prostev, V.Bryskin",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/042-1-B.jpg",
+        "largeImage": "data/images/042-1-A.jpg"
+      },
+      {
+        "image": "data/images/042-2-B.jpg",
+        "largeImage": "data/images/042-2-A.jpg"
+      },
+      {
+        "image": "data/images/042-3-B.jpg",
+        "largeImage": "data/images/042-3-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+Disappearing+nest",
+    "title": "\"The Disappearing nest\"",
+    "description": "(An art composition)",
+    "origin": "Authors A.Prostev, V.Bryskin",
+    "width": 0.6,
+    "height": 0.8,
+    "images": [
+      {
+        "image": "data/images/043-B.jpg",
+        "largeImage": "data/images/043-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+dynamical+ring",
+    "title": "\"The dynamical ring\" (the color hologram)",
+    "description": "(An art composition)",
+    "origin": "Authors V.Bryskin, A.Prostev",
+    "width": 0.3,
+    "height": 0.4,
+    "images": [
+      {
+        "image": "data/images/044-1-B.jpg",
+        "largeImage": "data/images/044-1-A.jpg"
+      },
+      {
+        "image": "data/images/044-2-B.jpg",
+        "largeImage": "data/images/044-2-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+Medium",
+    "title": "The Medium",
+    "width": 0.56,
+    "height": 0.78,
+    "images": [
+      {
+        "image": "data/images/045-B.jpg",
+        "largeImage": "data/images/045-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Broken+Port-Hole",
+    "title": "Broken Port-Hole",
+    "width": 1.1,
+    "height": 0.9,
+    "images": [
+      {
+        "image": "data/images/046-B.jpg",
+        "largeImage": "data/images/046-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "With+a+cube+fourth+dimension",
+    "title": "With a cube fourth dimension",
+    "width": 0.29,
+    "height": 0.29,
+    "images": [
+      {
+        "image": "data/images/047-B.jpg",
+        "largeImage": "data/images/047-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Madonna",
+    "title": "Madonna",
+    "width": 0.75,
+    "height": 0.56,
+    "images": [
+      {
+        "image": "data/images/048-1-B.jpg",
+        "largeImage": "data/images/048-1-A.jpg"
+      },
+      {
+        "image": "data/images/048-2-B.jpg",
+        "largeImage": "data/images/048-2-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Crucifix",
+    "title": "Crucifix",
+    "width": 0.62,
+    "height": 0.42,
+    "images": [
+      {
+        "image": "data/images/049-B.jpg",
+        "largeImage": "data/images/049-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Cross",
+    "title": "Cross",
+    "description": "(An art composition)",
+    "width": 0.7,
+    "height": 0.47,
+    "images": [
+      {
+        "image": "data/images/050-B.jpg",
+        "largeImage": "data/images/050-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+end",
+    "title": "The end",
+    "width": 0.42,
+    "height": 0.57,
+    "images": [
+      {
+        "image": "data/images/051-B.jpg",
+        "largeImage": "data/images/051-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Phantom+of+a+lonely+man",
+    "title": "Phantom of a lonely man",
+    "width": 0.29,
+    "height": 0.29,
+    "images": [
+      {
+        "image": "data/images/052-B.jpg",
+        "largeImage": "data/images/052-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Untitled",
+    "title": "Untitled",
+    "width": 0.7,
+    "height": 0.5,
+    "images": [
+      {
+        "image": "data/images/053-B.jpg",
+        "largeImage": "data/images/053-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Nostardamus",
+    "title": "Nostardamus",
+    "images": [
+      {
+        "image": "data/images/054-B.jpg",
+        "largeImage": "data/images/054-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+portrait+from+the+other+world",
+    "title": "The portrait from the other world",
+    "images": [
+      {
+        "image": "data/images/055-B.jpg",
+        "largeImage": "data/images/055-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+look",
+    "title": "The look",
+    "images": [
+      {
+        "image": "data/images/056-B.jpg",
+        "largeImage": "data/images/056-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+pearl",
+    "title": "The pearl",
+    "images": [
+      {
+        "image": "data/images/057-B.jpg",
+        "largeImage": "data/images/057-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "The+looking+angle",
+    "title": "The looking angle",
+    "images": [
+      {
+        "image": "data/images/058-B.jpg",
+        "largeImage": "data/images/058-A.jpg"
+      }
+    ]
+  },
+  {
+    "name": "This+fragile+life",
+    "title": "This fragile life",
+    "images": [
+      {
+        "image": "data/images/059-B.jpg",
+        "largeImage": "data/images/059-A.jpg"
+      }
+    ]
+  }
+]
