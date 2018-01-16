@@ -9,6 +9,8 @@
     "network-warning-failure-comment": "",
     "network-warning-offline": "No internet connection",
     "network-warning-offline-comment": "Check if your device is connected to a mobile network or WiFi.",
-    "network-warning-try-again": "Try Again"
+    "network-warning-try-again": "Try Again",
+    "network-status-online": "You are online",
+    "network-status-offline": "You are offline"
   }
 }

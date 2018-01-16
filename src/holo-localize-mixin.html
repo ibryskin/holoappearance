@@ -19,7 +19,8 @@
 
           language: {
             type: String,
-            readOnly: true
+            readOnly: true,
+            observer: '_languageChanged'
           },
 
           navigatorLanguage: {
@@ -41,6 +42,11 @@
             type: String,
             value: 'locales/'
           },
+
+          storageKey: {
+            type: String,
+            value: 'language'
+          }
         }
       }
 
@@ -96,6 +102,10 @@
         html.setAttribute('lang', language.substring(0, 2));
       }
 
+      _languageChanged(language) {
+        window.localStorage.setItem(this.storageKey, language);
+      }
+
       _loadResourcesOnLanguageChanged (pathToLocales, language) {
         if (pathToLocales && language) {
           const path = this.resolveUrl(`${pathToLocales}${language}.json`)
@@ -113,7 +123,9 @@
           navigatorLanguages = navigator.languages;
         }
 
-        const globalLanguages = this._computeGlobalVariables(defaultLanguage, supportedLanguages, navigatorLanguage, navigatorLanguages);
+        const selectedLanguage = window.localStorage.getItem(this.storageKey);
+
+        const globalLanguages = this._computeGlobalVariables(defaultLanguage, selectedLanguage, supportedLanguages, navigatorLanguage, navigatorLanguages);
 
         Holo.Localize.language = globalLanguages.language;
         Holo.Localize.navigatorLanguage = globalLanguages.navigatorLanguage;
@@ -122,7 +134,7 @@
         this._updateLangAttributeOfHtml(Holo.Localize.language);
       }
 
-      _computeGlobalVariables (defaultLanguage, supportedLanguages, navigatorLanguage, navigatorLanguages) {
+      _computeGlobalVariables (defaultLanguage, selectedLanguage, supportedLanguages, navigatorLanguage, navigatorLanguages) {
         let language = defaultLanguage;
         let baseLanguages = [];
 
@@ -134,6 +146,7 @@
         });
 
         navigatorLanguages = [...navigatorLanguages, ...baseLanguages];
+        if (selectedLanguage) navigatorLanguages.splice(0, 0, selectedLanguage);
         navigatorLanguages = navigatorLanguages.filter((item, pos, self) => self.indexOf(item) === pos);
 
         for (let i = 0; i < navigatorLanguages.length; ++i) {

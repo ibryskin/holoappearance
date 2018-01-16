@@ -1,22 +1,41 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="holo-localize-mixin.html">
+<link rel="import" href="holo-image.html">
 
 <dom-module id="holo-list-item">
   <template>
     <style>
       :host {
         @apply --layout-vertical;
-        /*@apply --layout-center-justified; */
+        @apply --layout-center-justified;
         text-align: center;
-        margin: 0 48px;
+        margin: 0 24px;
+      }
+
+      holo-image {
+        margin: 32px 0 16px;
+        /* width: 200px; */
+      }
+
+      holo-image::before {
+        content: "";
+        display: block;
+        padding-top: 100%;
+      }
+
+      .title {
+        color: var(--app-primary-color);
+        font-weight: bold;
+      }
+
+      @media (max-width: 767px) {
+        :host {
+          margin: 0 12px;
+        }
       }
     </style>
-    <paper-card image="[[_getItemImage(item)]]">
-      <div class="card-content">
-          <div class="title">[[item.title]]</div>
-      </div>
-    </paper-card>
+    <holo-image src=[[_getItemImage(item)]] alt=[[item.title]]></holo-image>
+    <div class="title">[[item.title]]</div>
   </template>
   <script>
 

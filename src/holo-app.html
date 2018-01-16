@@ -10,6 +10,9 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
 
 <link rel="import" href="holo-localize-mixin.html">
 <link rel="import" href="holo-category-data.html">
@@ -24,6 +27,8 @@
         --app-secondary-color: #cccccc;
         --app-accent-color: #ff6600;
         --app-drawer-width: 268px;
+
+        --paper-item-icon-width: 40px;
 
         display: block;
         position: relative;
@@ -98,20 +103,32 @@
         font-weight: bold;
       }
 
+      hr {
+        border: 0;
+        height: 1px;
+        background-color: #ffffff;
+      }
     </style>
 
     <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
 
-    <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
-    </app-route>
+    <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
     <holo-category-data language=[[language]] categories="{{categories}}"></holo-category-data>
 
-    <app-drawer-layout fullbleed narrow="{{narrow}}" responsive-width="1023px">
+    <app-drawer-layout fullbleed narrow="{{narrow}}" responsive-width="767px">
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-        <app-toolbar></app-toolbar>
-        <iron-selector selected="[[selectedPage]]" attr-for-selected="name" class="drawer-list" role="navigation">
+        <app-toolbar>
+        </app-toolbar>
+        <paper-menu-button>
+            <paper-icon-button icon="holo-flags:[[language]]" slot="dropdown-trigger" alt="language"></paper-icon-button>
+            <paper-listbox slot="dropdown-content" selected="[[language]]" attr-for-selected="name" on-iron-select="_onChangeLanguage">
+              <paper-icon-item name="en"><iron-icon icon="holo-flags:en" slot="item-icon"></iron-icon>English</paper-icon-item>
+              <paper-icon-item name="ru"><iron-icon icon="holo-flags:ru" slot="item-icon"></iron-icon>Russian</paper-icon-item>
+            </paper-listbox>
+          </paper-menu-button>
+      <iron-selector selected="[[selectedPage]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="home" href="[[rootPath]]">{{localize('introduction')}}</a>
           <dom-repeat items="[[categories]]" as="category" initial-count="5">
             <template>
@@ -121,14 +138,13 @@
           <a name="contact" href="[[rootPath]]contact">{{localize('contact')}}</a>
         </iron-selector>
         <hr />
-        <holo-button>
-          <button on-click="_changeLanguage">Change language</button>
-        </holo-button>
+        <div>
+        </div>
       </app-drawer>
 
       <!-- Main content -->
       <app-header-layout>
-        <app-header id="header" slot="header" fixed condenses effects="waterfall resize-title blend-background parallax-background">
+        <app-header id="header" slot="header" reveals condenses effects="waterfall resize-title blend-background parallax-background">
           <app-toolbar>
             <paper-icon-button icon="holo-icons:menu" drawer-toggle></paper-icon-button>
             <div condensed-title>{{localize('site-title')}}</div>
@@ -255,7 +271,7 @@
             this._networkSnackbar = document.createElement('holo-snackbar');
             this.root.appendChild(this._networkSnackbar);
           }
-          this._networkSnackbar.innerHTML = this.offline ? 'You are offline' : 'You are online';
+          this._networkSnackbar.innerHTML = this.offline ? this.localize('network-status-offline') : this.localize('network-status-online');
           this._networkSnackbar.open();
         }
       }
@@ -291,10 +307,13 @@
         this.page = '404';
       }
 
-      _changeLanguage() {
-        this.updateLanguage(this.language === 'ru' ? 'en' : 'ru');
+      _onChangeLanguage(e) {
+        let language = e.detail.item.getAttribute("name");
+        if (this.language === language) {
+          return;
+        }
+        this.updateLanguage(language);
       }
-
     }
 
     customElements.define(HoloApp.is, HoloApp);

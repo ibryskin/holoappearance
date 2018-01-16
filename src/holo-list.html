@@ -25,9 +25,10 @@
       .grid li {
         -webkit-flex: 1 1;
         flex: 1 1;
-        -webkit-flex-basis: 50%;
-        flex-basis: 50%;
-        max-width: 50%;
+        min-width: 200px;
+        -webkit-flex-basis: 33%;
+        flex-basis: 33%;
+        max-width: 33%;
       }
 
       .grid a {
@@ -36,6 +37,14 @@
       }
 
       @media (max-width: 767px) {
+        .grid li {
+          -webkit-flex-basis: 50%;
+          flex-basis: 50%;
+          max-width: 50%;
+        }
+      }
+
+      @media (max-width: 375px) {
         .grid li {
           -webkit-flex-basis: 100%;
           flex-basis: 100%;

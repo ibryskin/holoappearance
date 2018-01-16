@@ -9,6 +9,8 @@
     "network-warning-failure-comment": "",
     "network-warning-offline": "Нет соединения с интернетом",
     "network-warning-offline-comment": "Проверьте, что Ваше устройство подключено к мобильной сети или WiFi.",
-    "network-warning-try-again": "Повторить"
+    "network-warning-try-again": "Повторить",
+    "network-status-online": "Вы в сети",
+    "network-status-offline": "Вы не в сети"
   }
 }
