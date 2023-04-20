@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^4.17.0",
+    "eslint": "^8.38.0",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-html": "^4.0.2"
   },
